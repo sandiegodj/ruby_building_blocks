@@ -1,34 +1,24 @@
-def is_upper?(letter)
-  if letter.ord >= 65 and letter.ord <= 90
-    true
-  else
-    false
-  end
-end
-
-def is_lower?(letter)
-  if letter.ord >= 97 and letter.ord <= 122
-    true
-  else
-    false
+class String
+  def isupper?
+    self == self.upcase
   end
 end
 
 
-def caesar_cypher(message, cypher)
-cypher = cypher.to_i
-encrypted_message = []
-
-message.each_byte do |letter|
-	if is_upper?(letter)
-		encrypted_message << ((((letter - 65) + cypher) % 26) + 65).chr
-	elsif is_lower?(letter)
-		encrypted_message << ((((letter - 97) + cypher) % 26) + 97).chr
-	else
-		encrypted_message << letter.chr
-	end
+def cypher(str, shift)
+  new_str = [];
+  str.each_char do |c|
+    if c =~ /^[A-z]+$/
+      if c.isupper?
+        c = (((c.ord - 65) + shift) % 26) + 65
+      else
+        c = (((c.ord - 97) + shift) % 26) + 97
+      end
+    else
+      c
+    end
+    new_str << c.chr
+  end
+  puts new_str
 end
-encrypted_message.join
-end
-caesar_cypher("AAA", 0)
 
